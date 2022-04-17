@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: 鹿角兔子
+ * @Date: 2022-04-17 23:32:41
+ * @LastEditors: 鹿角兔子
+ * @LastEditTime: 2022-04-17 23:33:48
+ */
 // 给定一个整数 n ，返回 可表示为两个 n 位整数乘积的 最大回文整数 。因为答案可能非常大，所以返回它对 1337 取余 。
 
 // 输入：n = 2
@@ -6,15 +14,17 @@
 
 function largestPalindrome(n) {
   const maxNum = getMaxNum(n);
-  for (let i = getMaxReturn(maxNum); i > 0; i = getMaxReturn(i)) {
+  let i = getMaxReturn(maxNum);
+  while (i > 0) {
     const remainderArr = getRemainder(i);
-    console.log(remainderArr)
     for (let j = 0; j < remainderArr.length; j++) {
       const res = getRes(remainderArr[j], i, n);
       if (res) {
         return res;
       }
     }
+
+    i = getMaxReturn(i - 1)
   }
 }
 
@@ -47,7 +57,7 @@ function getRemainder(returnNum) {
 
 function getRes(remainder, returnNum, n) {
   let nMax = 10 ** n - 1;
-  while(nMax > 0) {
+  while (nMax > 0) {
     const anthoerOne = returnNum / nMax;
     if (anthoerOne <= 10 ** 2 - 1 && Number.isInteger(anthoerOne)) {
       return [anthoerOne, nMax];
@@ -61,7 +71,7 @@ function getRes(remainder, returnNum, n) {
 }
 
 // console.log(getRemainder(getMaxReturn(getMaxNum(2))));
-console.log(largestPalindrome(2))
+console.log(largestPalindrome(3))
 
 // 1. 获取两个 n 位数最大乘积 maxNum
 // 2. 获取小于等于最大乘积的回文数 maxReturn
